@@ -90,19 +90,17 @@ def parse_screenshot(path, coordinate_map):
 
         return parsed_image
 
-    # parsed_image = {x: image_to_string(full_image.crop(
-    #     resolution_coordinate_set[x])) for x in resolution_coordinate_set}
-
     parsed_data = parse_coordinate_map_recursive(coordinate_map)
 
     pathlib.Path('./tmp').mkdir(exist_ok=True)
     debug_image._image.save("tmp/debug-output.png")
 
     return parsed_data
-    # name_only = full_image.crop((538, 257, 824, 330))
-    # name_only.save('output.png')
+
+def parse_screenshot_2k_resolution(path):
+    return parse_screenshot(path, two_k_coordinate_set)
 
 
-path = 'example-data/push.png'
-
-print(json.dumps(parse_screenshot(path, two_k_coordinate_set), indent=4))
+if __name__ == '__main__':
+    path = 'example-data/push.png'
+    print(json.dumps(parse_screenshot(path, two_k_coordinate_set), indent=4))
