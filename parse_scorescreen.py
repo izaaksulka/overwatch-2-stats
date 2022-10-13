@@ -1,5 +1,5 @@
 
-from textwrap import indent
+import pathlib
 import pytesseract
 from PIL import Image, ImageDraw
 import json
@@ -94,12 +94,15 @@ def parse_screenshot(path, coordinate_map):
     #     resolution_coordinate_set[x])) for x in resolution_coordinate_set}
 
     parsed_data = parse_coordinate_map_recursive(coordinate_map)
-    debug_image._image.save("debug-output.png")
+
+    pathlib.Path('./tmp').mkdir(exist_ok=True)
+    debug_image._image.save("tmp/debug-output.png")
+
     return parsed_data
     # name_only = full_image.crop((538, 257, 824, 330))
     # name_only.save('output.png')
 
 
-path = 'full-screenshot-1.png'
+path = 'example-data/push.png'
 
 print(json.dumps(parse_screenshot(path, two_k_coordinate_set), indent=4))
