@@ -3,6 +3,7 @@ import pathlib
 import pytesseract
 from PIL import Image, ImageDraw
 import json
+import argparse
 
 # looks like it's this many pixels between each horizontal line in the stats board
 VERTICAL_SPACING = 82
@@ -108,5 +109,7 @@ def parse_screenshot_2k_resolution(path):
 
 
 if __name__ == '__main__':
-    path = 'game-data/wins/attack-leaver.png'
-    print(json.dumps(parse_screenshot(path, two_k_coordinate_set), indent=4))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-p", "--path", required=True, help="The path to the image you would like to parse")
+    args = vars(ap.parse_args())
+    print(json.dumps(parse_screenshot(args['path'], two_k_coordinate_set), indent=4))
