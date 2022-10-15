@@ -82,6 +82,8 @@ def parse_screenshot(path, coordinate_map):
         #     raw_string = int(raw_string)
         # except:
         #     pass
+        if(raw_string == ""):
+            raw_string = "0"
         return raw_string
 
     def parse_coordinate_map_recursive(coordinate_map):
