@@ -73,14 +73,20 @@ def parse_screenshot(path, coordinate_map):
     _, _, V = full_image.convert('HSV').split()
     full_image = V.point(lambda p: p > 220 and 255)
 
-    debug_image = ImageDraw.Draw(full_image)
+    debug_image = full_image.convert('RGB')
+    debug_image = ImageDraw.Draw(debug_image)
 
     def image_to_string(image):
-        return pytesseract.image_to_string(image, config=("--psm 10")).strip()
+        raw_string = pytesseract.image_to_string(image, config=("--psm 10")).strip().replace(',', '')
+        # try:
+        #     raw_string = int(raw_string)
+        # except:
+        #     pass
+        return raw_string
 
     def parse_coordinate_map_recursive(coordinate_map):
         if (type(coordinate_map) is tuple):
-            debug_image.rectangle(coordinate_map)
+            debug_image.rectangle(coordinate_map, outline='yellow')
             return image_to_string(full_image.crop(coordinate_map))
 
         parsed_image = {}
@@ -102,5 +108,5 @@ def parse_screenshot_2k_resolution(path):
 
 
 if __name__ == '__main__':
-    path = 'example-data/push.png'
+    path = 'game-data/wins/attack-leaver.png'
     print(json.dumps(parse_screenshot(path, two_k_coordinate_set), indent=4))
