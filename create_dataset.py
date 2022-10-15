@@ -14,6 +14,7 @@ def parse_all_data_in_directory(directory, winner_value):
             print('parsing: ', full_path, winner_value)
 
             data_from_screen = parse_scorescreen.parse_screenshot_2k_resolution(full_path)
+            data_from_screen['winner'] = winner_value
 
             print(json.dumps(data_from_screen, indent=4))
             game_data.append(data_from_screen)
