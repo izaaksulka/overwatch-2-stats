@@ -1,10 +1,14 @@
-
 import os
 import sys
 import json
+
 sys.path.append('./')
 import parse_scorescreen
 import pandas
+
+WIN_DIRECTORY = './game-data/wins'
+LOSE_DIRECTORY = './game-data/losses'
+
 
 def parse_all_data_in_directory(directory, winner_value):
     game_data = []
@@ -25,22 +29,26 @@ def parse_all_data_in_directory(directory, winner_value):
     The game data is in a dictionary with more dictionaries nested inside it.  pandas will want
     it to be flat to make a dataframe, so this flattens the dictionaries.
 """
+
+
 def flatten_game_data(game_data):
     flat_dict = {}
+
     def flatten(root, name):
         if not type(root) is dict:
-            flat_dict [name] = root
+            flat_dict[name] = root
         else:
             for key in root:
                 flatten(root[key], name + '_' + key)
+
     flatten(game_data, "")
     return flat_dict
-        
+
 
 def main():
     all_games = []
-    all_games += parse_all_data_in_directory('./game-data/wins', "team-1")
-    all_games += parse_all_data_in_directory('./game-data/losses', "team-2")
+    all_games += parse_all_data_in_directory(WIN_DIRECTORY, "team-1")
+    all_games += parse_all_data_in_directory(LOSE_DIRECTORY, "team-2")
     # all_games += parse_all_data_in_directory('example-data', 'team-1')
 
     for i in range(len(all_games)):

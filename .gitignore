@@ -1,5 +1,6 @@
 game-data
 tmp
+output.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
